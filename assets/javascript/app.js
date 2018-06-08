@@ -47,11 +47,19 @@ function displayGif() {
       //create a div to hold the current button clicked 10 search results
       var newGifDiv = $("<div>").attr('class', 'images'); 
       //get the first Gif from the group of 10
-      var newGifImageUrl = response.data[y].images.fixed_height_still.url;
+      var newGifImageUrl = response.data[y].images.fixed_height.url;
       //create an image to put in the html
       var image = $("<img>").attr("src", newGifImageUrl);
       image.attr("class", "imageHolder");
       image.attr("data", response.data[y].id);
+      image.attr("data-state", "still");
+      if(image.height > newGifDiv.height) {
+        image.height = "200px";
+    } else {image.height = "auto"}
+      if(image.width > newGifDiv.width) {
+        image.width = newGifDiv.width - "20px";
+      } else {image.width = "auto"}
+
       //get the rating of the gif
       var rating = $("<h5 class='rating'>Rating:  " + response.data[y].rating + "</h5>");
       //add the image to the div
@@ -83,8 +91,8 @@ function displayGif() {
       var newAnimatedGif = response.data.images.fixed_height.url;
       console.log(newAnimatedGif);
       //replace the still version with the animated version
-      var imageHolderClass = $(".imageHolder");
-      imageHolderClass.attr("src", newAnimatedGif);
+      var imageHolder = $(".imageHolder").attr("data", idOfGif);
+      imageHolder.attr("src", newAnimatedGif);
 
       
     
